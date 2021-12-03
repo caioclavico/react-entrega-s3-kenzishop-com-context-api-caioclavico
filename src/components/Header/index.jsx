@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import {
   AppBar,
   Toolbar,
@@ -7,14 +8,21 @@ import {
   Badge,
 } from "@material-ui/core";
 import { useContext } from "react";
-import { MdLogin, MdShoppingCart } from "react-icons/md";
+import {
+  MdBrightnessLow,
+  MdDarkMode,
+  MdLogin,
+  MdShoppingCart,
+} from "react-icons/md";
 import { useHistory } from "react-router";
 import { CartContext } from "../../providers/cart";
+import { ThemeContext } from "../../providers/theme";
 
 const Header = () => {
   const history = useHistory();
   const { cartProducts } = useContext(CartContext);
-
+  const { toggleColorMode } = useContext(ThemeContext);
+  const theme = useTheme();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -23,6 +31,18 @@ const Header = () => {
             Kenzie Shop
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
+          {theme.palette.mode} mode
+          <IconButton
+            sx={{ ml: 1 }}
+            onClick={() => toggleColorMode()}
+            color="inherit"
+          >
+            {theme.palette.mode === "dark" ? (
+              <MdDarkMode />
+            ) : (
+              <MdBrightnessLow />
+            )}
+          </IconButton>
           <Box>
             <IconButton
               size="large"
